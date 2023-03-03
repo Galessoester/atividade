@@ -9,7 +9,11 @@
     <title>Departamento</title>
 </head>
 
-<body>
+<body onload="buscarCarros()">
+
+
+    <h1>Ester Galesso - RM 89350</h1>
+
     <!-- -----------------------------departamento--------------------------------- -->
     <input type="button" value="Buscar Departamento" onclick="buscarDepartamento()">
     <ul id="departamento">
@@ -17,8 +21,21 @@
 
     <hr>
 
-    <!-- ------------------------------cliente------------------------------------- -->
+    <!-- --------------------------------cep---------------------------------------- -->
+    <h3>Exercício 1</h3>
 
+    <p>CEP:<input type="text" id="cep" onblur="buscarCEP(this.value)" /></p>
+    <p>Rua: <input type="text" id="rua"></p>
+    <p>Bairro: <input type="text" id="bairro"></p>
+    <p>Cidade: <input type="text" id="localidade"></p>
+    <p>Estado: <input type="text" id="uf"></p>
+    <p>DDD: <input type="text" id="ddd"></p>
+
+
+    <hr>
+
+    <!-- ------------------------------cliente------------------------------------- -->
+    <h3>Exercício 2</h3>
     <input type="button" value="Mostrar Clientes" onclick="buscarClientes()">
     <table id="cliente">
         <thead>
@@ -30,28 +47,52 @@
 
     <hr>
 
-    <!-- --------------------------------cep---------------------------------------- -->
-    <h3>Endereço</h3>
-
-    <p>CEP:<input type="text" id="cep" onblur="buscarCEP(this.value)" /></p>
-    <p>Rua: <input type="text" id="rua"></p>
-    <p>Bairro: <input type="text" id="bairro"></p>
-    <p>Cidade: <input type="text" id="localidade"></p>
-    <p>Estado: <input type="text" id="uf"></p>
-    <p>DDD: <input type="text" id="ddd"></p>
-
-
     <!-- ---------------------------------carro------------------------------------- -->
+    <h3>Exercício 3</h3>
+    <label for="opcoes">Escolha o modelo</label>
+    <select id="opcoes">
+    </select>
+
+    <hr>
+
+    <!-- ------------------------------materias------------------------------------- -->
+    <h3>Exercício 4</h3>
+    <input type="button" value="Mostrar Matérias" onclick="buscarMaterias()">
+    <table id="materias">
+    </table>
+
+    <hr>
 
     <script>
         // -------------------------------carro---------------------------------------------------
-        function buscarClientes() {
+        function buscarCarros() {
             fetch("https://demo0582675.mockable.io/carros")
                 .then(response => response.json())
-                .then(data => criarListaCliente(data))
-                .catch(error => alert("o erro foi:" + error))
+                .then(data => criarListaCarro(data))
+                .catch(error => alert(error))
         }
 
+        function criarListaCarro(data) {
+            for (let i = 0; i < data.length; i++) {
+                let item = `<option>${data[i]}</option>`
+                document.getElementById("opcoes").innerHTML += item;
+            }
+        }
+
+        // ------------------------------materias---------------------------------------------------
+        function buscarMaterias() {
+            fetch("https://demo0582675.mockable.io/materias")
+                .then(response => response.json())
+                .then(data => criarListaMaterias(data))
+                .catch(error => alert(error))
+        }
+
+        function criarListaMaterias(data) {
+            for (let i = 0; i < data.length; i++) {
+                let item = `<tr><td>${data[i]}</td></tr>`
+                document.getElementById("materias").innerHTML += item;
+            }
+        }
         // ------------------------------clientes---------------------------------------------------
         function buscarClientes() {
             fetch("https://demo0582675.mockable.io/clientes")
